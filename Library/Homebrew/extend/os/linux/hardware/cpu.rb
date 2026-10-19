@@ -50,8 +50,8 @@ module OS
           sig { params(implementer: Integer, cpu_model: Integer).returns(Symbol) }
           def arm_family(implementer, cpu_model)
             unknown = :"unknown_#{implementer.to_s(HEX_BASE)}_#{cpu_model.to_s(HEX_BASE)}"
-            # only mapping for Arm (0x41) is implemented
-            return unknown if implementer != 0x41
+            arm_implementer = 0x41
+            return unknown if implementer != arm_implementer
 
             # See https://en.wikipedia.org/wiki/ARM_architecture_family#Cores
             # and https://github.com/llvm/llvm-project/blob/main/llvm/lib/TargetParser/Host.cpp
