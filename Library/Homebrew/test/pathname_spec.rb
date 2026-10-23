@@ -27,6 +27,22 @@ RSpec.describe Pathname do
     end
   end
 
+  describe FastRelativePathExtension do
+    it "relates clean absolute paths directly" do
+      expect(Pathname("/opt/homebrew/Cellar/wget/1.0/bin/wget").relative_path_from("/opt/homebrew/bin"))
+        .to eq(Pathname("../Cellar/wget/1.0/bin/wget"))
+    end
+
+    it "still cleans `..` components" do
+      expect(Pathname("/opt/homebrew/lib/../bin/wget").relative_path_from("/opt/homebrew/bin"))
+        .to eq(Pathname("wget"))
+    end
+
+    it "still rejects mixing absolute and relative paths" do
+      expect { Pathname("/opt/homebrew").relative_path_from("bin") }.to raise_error(ArgumentError)
+    end
+  end
+
   describe DiskUsageExtension do
     before do
       mkdir_p dir/"a-directory"

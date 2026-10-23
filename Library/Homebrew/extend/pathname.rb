@@ -4,6 +4,7 @@
 require "system_command"
 require "extend/pathname/disk_usage_extension"
 require "extend/pathname/eager_initialize_extension"
+require "extend/pathname/fast_relative_path_extension"
 require "extend/pathname/observer_pathname_extension"
 require "extend/pathname/write_mkpath_extension"
 require "utils/output"
@@ -32,6 +33,7 @@ class Pathname
   include DiskUsageExtension
   include Utils::Output::Mixin
   prepend EagerInitializeExtension
+  prepend FastRelativePathExtension
 
   sig { void }
   def self.activate_extensions!
